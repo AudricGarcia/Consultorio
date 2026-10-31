@@ -1,0 +1,7 @@
+<div class="formgrid">
+<div class="field"><label for="name">Nombre *</label><input id="name" name="name" value="{{ old('name', $user->name ?? '') }}" maxlength="255" required></div>
+<div class="field"><label for="email">Correo *</label><input id="email" type="email" name="email" value="{{ old('email', $user->email ?? '') }}" maxlength="255" required></div>
+@unless(isset($user))<div class="field"><label for="password">Contraseña inicial *</label><input id="password" type="password" name="password" minlength="12" required><span class="hint">Mínimo 12 caracteres, mayúsculas, minúsculas y números.</span></div><div class="field"><label for="password_confirmation">Confirmar contraseña *</label><input id="password_confirmation" type="password" name="password_confirmation" minlength="12" required></div>@endunless
+<div class="field wide"><label>Rol(es) *</label><div class="grid">@foreach($roles as $role)<label class="tag"><input type="checkbox" name="role_ids[]" value="{{ $role->id }}" @checked(in_array($role->id, old('role_ids', isset($user) ? $user->roles->pluck('id')->all() : [])))> {{ $role->label }}</label>@endforeach</div><span class="hint">El rol Doctor propietario solo se puede asignar con el comando seguro de consola.</span></div>
+@isset($user)<div class="field wide"><input type="hidden" name="is_active" value="0"><label class="tag"><input type="checkbox" name="is_active" value="1" @checked(old('is_active', $user->is_active))> Cuenta activa</label></div>@endisset
+</div>

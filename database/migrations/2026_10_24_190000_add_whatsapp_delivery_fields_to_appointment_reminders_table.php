@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('appointment_reminders', function (Blueprint $table): void {
+            $table->string('whatsapp_status')->default('pending')->after('status');
+            $table->string('whatsapp_message_id')->nullable()->after('whatsapp_status');
+            $table->timestamp('whatsapp_sent_at')->nullable()->after('whatsapp_message_id');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('appointment_reminders', function (Blueprint $table): void {
+            $table->dropColumn(['whatsapp_status', 'whatsapp_message_id', 'whatsapp_sent_at']);
+        });
+    }
+};

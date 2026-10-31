@@ -1,0 +1,6 @@
+@extends('layouts.clinic')
+@section('title', 'Historia clínica')
+@section('content')
+<header class="heading"><div><div class="kicker">Acceso clínico restringido</div><h1>Historia clínica</h1><div class="muted">Los registros anteriores se conservan; las notas nuevas se agregan al historial.</div></div></header>
+<section class="panel"><div class="tablewrap"><table><thead><tr><th>Fecha</th><th>Paciente</th><th>Motivo</th><th>Profesional</th><th>Estado</th><th></th></tr></thead><tbody>@forelse($records as $record)<tr><td>{{ $record->encountered_at->format('d/m/Y H:i') }}</td><td><a href="{{ route('patients.show', $record->patient) }}">{{ $record->patient->last_name }}, {{ $record->patient->first_name }}</a></td><td>{{ $record->reason ?: '—' }}</td><td>{{ $record->professional->name }}</td><td><span class="tag">{{ $record->status === 'validated' ? 'Validado' : 'Borrador' }}</span></td><td><a class="btn small" href="{{ route('clinical-records.show', $record) }}">Ver registro</a></td></tr>@empty<tr><td colspan="6"><div class="empty">Todavía no hay registros clínicos.</div></td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $records->links() }}</div></section>
+@endsection
